@@ -24,7 +24,6 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       ISSUE_NUMBER: ${{ github.event.issue.number }}
-      DIAGNOSIS_FILE: ${{ runner.temp }}/diagnosis.md
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -62,6 +61,7 @@ jobs:
         run: |
           set -euo pipefail
 
+          DIAGNOSIS_FILE="$RUNNER_TEMP/diagnosis.md"
           if [ ! -s "$DIAGNOSIS_FILE" ]; then
             echo "::error::Claude no generó el diagnóstico en $DIAGNOSIS_FILE"
             exit 1
